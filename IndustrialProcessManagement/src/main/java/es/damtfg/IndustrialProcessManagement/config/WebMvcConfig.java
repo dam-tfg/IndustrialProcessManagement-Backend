@@ -3,6 +3,7 @@
  */
 package es.damtfg.IndustrialProcessManagement.config;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author Alberto González
  *
  */
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	private final long MAX_AGE_SECS = 3600;

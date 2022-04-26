@@ -131,4 +131,24 @@ public class PersonController {
 		return person;
 	}
 	
+	/**
+	 * Devuelve una persona por nombre de usuario
+	 * 
+	 * @param username
+	 * 
+	 * @return ResponseEntity (OK + Persona)
+	 */
+	@GetMapping("{username}")
+	@PreAuthorize("hasRole('ADMIN') or principal.username == #username")
+	public ResponseEntity<?> read(@PathVariable String username) {
+		
+		User user = userService.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+		
+		Person person = personService.findById(user.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Person", "username", username));
+		
+		return ResponseEntity.ok(person);
+	}
+	
 }

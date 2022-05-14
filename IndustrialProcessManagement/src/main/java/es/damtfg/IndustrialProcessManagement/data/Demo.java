@@ -55,8 +55,6 @@ public class Demo implements CommandLineRunner {
 			
 			newUser.setPerson(newPerson);
 			
-			//newUser.setRoles(Collections.singleton(userRole));
-
 			newUser.setRoles(new HashSet<Role>(roleService.listAll()));
 			
 			userService.save(newUser);
@@ -65,7 +63,7 @@ public class Demo implements CommandLineRunner {
 		/**
 		 * Usuario -> Usuario
 		 */
-		newUser = new User("User", "user@localhost.es", "user-demo", new Date());
+		newUser = new User("user", "user@localhost.es", "user-demo", new Date());
 		newPerson = new Person("Usuario", "De Aplicación", newUser);
 		
 		apiResponse = userService.create(newUser);
@@ -79,8 +77,6 @@ public class Demo implements CommandLineRunner {
 			userService.save(newUser);
 		}
 				
-		// TODO
-		System.out.println("--> TODO - Implementar data demo");		
 	}
 	
 }

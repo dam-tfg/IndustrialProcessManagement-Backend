@@ -25,40 +25,40 @@ public class Initial implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		
-		/**
-		 * ROLES
-		 */
+		addRoles();
+		addEvents();
+	}
+	
+	/**
+	 * Roles
+	 */
+	private void addRoles() {
+		
 		ArrayList<Role> role = new ArrayList<Role>();
 		
+		role.add(new Role("ROLE_SUPER", "Super usuario"));
 		role.add(new Role("ROLE_ADMIN", "Administrador"));
 		role.add(new Role("ROLE_USER", "Usuario de app"));
+		role.add(new Role("ROLE_CLIENT", "Client genérico"));
 		role.add(new Role("ROLE_EMPLOYEE", "Trabajador de la empresa"));
 		role.add(new Role("ROLE_TESTER", "Testeador de la app"));
-		
-//		for(int index = 0; index < role.size(); index++) {
-//						
-//			if(!roleService.findByName("ROLE_" + role.get(index).trim().toUpperCase()).isPresent()) {
-//				
-//				roleService.save(new Role("ROLE_" + role.get(index).trim().toUpperCase(), ""));
-//			}
-//		}
-		
-		roleService.saveAll(role);
-		
-		
-		
-		/**
-		 * EVENTS
-		 */
-		ArrayList<LogEvent> event = new ArrayList<LogEvent>();
 				
+		roleService.saveAll(role);
+	}
+	
+	/**
+	 * Events
+	 */
+	private void addEvents() {
+		
+		ArrayList<LogEvent> event = new ArrayList<LogEvent>();
+		
 		event.add(new LogEvent("START", "Comienzo de la fabricación"));
 		event.add(new LogEvent("PAUSE", "Parada momentánea de la fabricación"));
 		event.add(new LogEvent("FORCE_PAUSE", "Parada momentánea forzada de la fabricación"));
 		event.add(new LogEvent("STOP", "Detención de la fabricación"));
-
-		// TODO
-		System.out.println("--> TODO - Implementar app data load");
+		
+		// TODO Creación del servicio
+		// eventService.saveAll(event);
 	}
-	
 }

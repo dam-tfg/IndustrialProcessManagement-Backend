@@ -7,15 +7,15 @@ import javax.validation.constraints.NotNull;
 
 import es.damtfg.IndustrialProcessManagement.model.user.Person;
 import es.damtfg.IndustrialProcessManagement.model.user.User;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author Alberto González
  *
  */
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 public class PersonSummary {
 
 	@NotNull

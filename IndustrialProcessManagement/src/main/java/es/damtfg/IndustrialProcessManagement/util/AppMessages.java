@@ -29,4 +29,7 @@ public abstract class AppMessages {
 	public static final String LOG_ERROR_JWT_UNSUPPORTED_TOKEN = "Unsupported JWT token";
 	public static final String LOG_ERROR_JWT_CLAIMS_EMPTY = "JWT claims string is empty";
 	
+	public static final String SUCCESS_PRODUCT_CREATION = "prueba";
+	public static final String SUCCESS_ORDER_CREATION = "prueba";
+	
 }

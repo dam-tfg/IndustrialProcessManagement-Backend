@@ -71,7 +71,7 @@ public class Section implements Serializable {
 			cascade = CascadeType.ALL,
 			orphanRemoval = false)
 	@JoinColumn(name = "sectionId")
-	private Set<Process> process;
+	private Set<Proceso> process;
 	
 	@OneToMany(fetch = FetchType.LAZY, 
 			cascade = CascadeType.ALL,

@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import es.damtfg.IndustrialProcessManagement.model.production.Proceso;
+import es.damtfg.IndustrialProcessManagement.model.production.Process;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.production.ProcessRequest;
 import es.damtfg.IndustrialProcessManagement.service.production.ProcessServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -37,15 +38,15 @@ public class ProcessController {
 	 * @return
 	 */
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody Proceso processRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody ProcessRequest processRequest) {
 		
-		Proceso newProcess = new Proceso(processRequest.getName(), processRequest.getSection());
+		Process newProcess = new Process(processRequest.getName(), processRequest.getSection());
 		
 		ApiResponse apiResponse = processService.create(newProcess);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Proceso result = processService.save(newProcess);
+		Process result = processService.save(newProcess);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		

@@ -3,7 +3,7 @@ package es.damtfg.IndustrialProcessManagement.service.production;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import es.damtfg.IndustrialProcessManagement.model.production.Proceso;
+import es.damtfg.IndustrialProcessManagement.model.production.Process;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.repository.production.ProcessRepository;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
@@ -20,7 +20,7 @@ public class ProcessServiceImpl implements ProcessService{
 	private ProcessRepository processRepository;
 	
 	@Override
-	public ApiResponse create(Proceso proceso) {
+	public ApiResponse create(Process proceso) {
 
 		proceso.setName(proceso.getName().trim().toLowerCase());
 
@@ -34,7 +34,7 @@ public class ProcessServiceImpl implements ProcessService{
 	}
 
 	@Override
-	public Proceso save(Proceso process) {
+	public Process save(Process process) {
 		return processRepository.save(process);
 	}
 

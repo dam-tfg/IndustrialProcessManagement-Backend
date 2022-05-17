@@ -13,10 +13,6 @@ import es.damtfg.IndustrialProcessManagement.model.production.Line;
 @Repository
 public interface LineRepository extends JpaRepository <Line, Long> {
 	
-	/**
-	 * @param name
-	 * 
-	 */
 	Boolean findByName(String name);
 
 	Line save(Line line);

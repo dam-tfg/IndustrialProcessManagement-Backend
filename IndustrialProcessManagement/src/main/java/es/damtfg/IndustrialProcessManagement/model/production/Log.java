@@ -84,7 +84,7 @@ public class Log implements Serializable {
 			cascade = CascadeType.ALL)
 	@JoinColumn(name = "processId",
 			nullable = true)
-	private Proceso process;
+	private Process process;
 	
 	@ManyToOne(fetch = FetchType.LAZY, 
 			cascade = CascadeType.ALL)

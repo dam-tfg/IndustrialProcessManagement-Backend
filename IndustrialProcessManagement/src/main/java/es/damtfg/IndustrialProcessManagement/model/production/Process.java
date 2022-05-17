@@ -36,7 +36,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = ModelDataBase.PRODUCTION_PROCESS)
-public class Proceso implements Serializable {
+public class Process implements Serializable {
 
 	/**
 	 * Serial version UID

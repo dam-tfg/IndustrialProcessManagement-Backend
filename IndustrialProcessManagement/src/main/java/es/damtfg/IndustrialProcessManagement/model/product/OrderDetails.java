@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -52,11 +51,10 @@ public class OrderDetails implements Serializable {
 	@Column(name = "orderDetailsId")
 	private Long id;
 	
-	@Min(value = 1)
+	@Min(value = 0)
 	@Column(name = "quantity")
 	private float quantity;
 	
-	@NotBlank
 	@NonNull
 	@Size(max = 50)
 	@Column(name = "unit")

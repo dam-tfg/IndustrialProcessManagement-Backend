@@ -1,6 +1,6 @@
 package es.damtfg.IndustrialProcessManagement.service.production;
 
-import es.damtfg.IndustrialProcessManagement.model.production.Proceso;
+import es.damtfg.IndustrialProcessManagement.model.production.Process;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 
 /**
@@ -12,8 +12,8 @@ public interface ProcessService {
 
 	public Boolean existsByName(String name);
 
-	public Proceso save(Proceso process);
+	public Process save(Process process);
 
-	ApiResponse create(Proceso proceso);
+	ApiResponse create(Process proceso);
 
 }

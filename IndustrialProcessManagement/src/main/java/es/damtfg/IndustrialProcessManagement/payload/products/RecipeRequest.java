@@ -1,7 +1,5 @@
 package es.damtfg.IndustrialProcessManagement.payload.products;
 
-import javax.validation.constraints.NotBlank;
-
 import es.damtfg.IndustrialProcessManagement.model.product.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,10 +13,8 @@ import lombok.Setter;
 @Setter
 public class RecipeRequest {
 	
-	@NotBlank
 	private String name;
 	
-	@NotBlank
 	private Product product;
 
 }

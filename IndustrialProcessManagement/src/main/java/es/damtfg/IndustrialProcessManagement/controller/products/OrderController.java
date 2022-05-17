@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.model.product.Order;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.products.OrderRequest;
 import es.damtfg.IndustrialProcessManagement.service.product.OrderServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -40,7 +41,7 @@ public class OrderController {
 	 * @return ResponseEntity (HTTP Status created + Location)
 	 */
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody Order orderRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody OrderRequest orderRequest) {
 
 		Order newOrder = new Order(new Date(), orderRequest.getOrderDetails());
 		

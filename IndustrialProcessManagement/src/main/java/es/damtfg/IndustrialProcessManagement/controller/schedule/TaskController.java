@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.model.schedule.Task;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.schedule.TaskRequest;
 import es.damtfg.IndustrialProcessManagement.service.schedule.TaskServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -32,15 +33,15 @@ public class TaskController {
 	private TaskServiceImpl taskService;
 	
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody Task taskRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody TaskRequest taskRequest) {
 				
-		Task newUser = new Task(taskRequest.getDate(), taskRequest.getOrderDetails());
+		Task newTask = new Task(taskRequest.getDate(), taskRequest.getOrderDetails());
 		
-		ApiResponse apiResponse = taskService.create(newUser);
+		ApiResponse apiResponse = taskService.create(newTask);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Task result = taskService.save(newUser);
+		Task result = taskService.save(newTask);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getDate()).toUri();	
 		

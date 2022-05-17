@@ -32,17 +32,16 @@ public class CompanyController {
 	@Autowired
 	private CompanyServiceImpl companyService;
 	
-
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody CompanyRequest companyRequest) {
 		
-		Company newSpecialty = new Company(companyRequest.getName(), companyRequest.getUser());
+		Company newCompany = new Company(companyRequest.getName(), companyRequest.getUser());
 		
-		ApiResponse apiResponse = companyService.create(newSpecialty);
+		ApiResponse apiResponse = companyService.create(newCompany);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Company result = companyService.save(newSpecialty);
+		Company result = companyService.save(newCompany);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		

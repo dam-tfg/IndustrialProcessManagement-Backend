@@ -24,7 +24,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	@Override
 	@Transactional
 	public ApiResponse create(OrderDetails orderDetails) {
-		orderDetails.setQuantity(orderDetails.getQuantity());
+		orderDetails.setUnit(orderDetails.getUnit());
 		
 		return new ApiResponse(true, AppMessages.SUCCESS_ORDER_CREATION);
 	}

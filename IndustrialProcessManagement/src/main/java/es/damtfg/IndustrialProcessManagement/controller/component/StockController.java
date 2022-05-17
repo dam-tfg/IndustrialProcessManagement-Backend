@@ -40,13 +40,13 @@ public class StockController {
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody StockRequest stockRequest) {
 		
-		Stock newComponent = new Stock(stockRequest.getUnit(), stockRequest.getComponent());
+		Stock newStock = new Stock(stockRequest.getUnit(), stockRequest.getComponent());
 		
-		ApiResponse apiResponse = stockService.create(newComponent);
+		ApiResponse apiResponse = stockService.create(newStock);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Stock result = stockService.save(newComponent);
+		Stock result = stockService.save(newStock);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUnit()).toUri();	
 		

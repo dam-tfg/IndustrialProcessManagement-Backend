@@ -2,8 +2,8 @@ package es.damtfg.IndustrialProcessManagement.payload.schedule;
 
 import java.util.Date;
 
-import javax.validation.constraints.NotBlank;
-
+import es.damtfg.IndustrialProcessManagement.model.product.OrderDetails;
+import es.damtfg.IndustrialProcessManagement.payload.products.OrderDetailsRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +14,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class TaskRequest {
+public class TaskRequest extends OrderDetailsRequest{
 	
-	@NotBlank
 	private Date date;
+
+	private OrderDetails orderDetails;
 
 }

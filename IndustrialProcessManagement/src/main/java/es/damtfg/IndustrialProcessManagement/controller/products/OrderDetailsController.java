@@ -15,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.model.product.OrderDetails;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.products.OrderDetailsRequest;
 import es.damtfg.IndustrialProcessManagement.service.product.OrderDetailsServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -40,15 +41,15 @@ public class OrderDetailsController {
 	 */
 	
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody OrderDetails orderDetailsRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody OrderDetailsRequest orderDetailsRequest) {
 				
-		OrderDetails newOrder = new OrderDetails(orderDetailsRequest.getUnit(), orderDetailsRequest.getProduct());
+		OrderDetails newOrderDetails = new OrderDetails(orderDetailsRequest.getUnit(), orderDetailsRequest.getProduct());
 		
-		ApiResponse apiResponse = orderDetailsService.create(newOrder);
+		ApiResponse apiResponse = orderDetailsService.create(newOrderDetails);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		OrderDetails result = orderDetailsService.save(newOrder);
+		OrderDetails result = orderDetailsService.save(newOrderDetails);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUnit()).toUri();	
 		

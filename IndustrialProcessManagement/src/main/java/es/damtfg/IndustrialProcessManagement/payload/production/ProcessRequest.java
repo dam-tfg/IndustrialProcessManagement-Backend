@@ -1,7 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.payload.production;
 
-import javax.validation.constraints.NotBlank;
 
+import es.damtfg.IndustrialProcessManagement.model.production.Section;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,9 +12,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ProcessRequest {
+public class ProcessRequest extends SectionRequest{
 
-	@NotBlank
 	private String name;
+	
+	private Section section;
 	
 }

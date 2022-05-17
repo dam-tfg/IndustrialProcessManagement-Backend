@@ -52,7 +52,7 @@ public class RecipeComponent implements Serializable {
 	@Column(name = "recipeComponentId")
 	private Long id;
 	
-	@Min(value = 1)
+	@Min(value = 0)
 	@Column(name = "quantity")
 	private float quantity;
 	
@@ -63,7 +63,7 @@ public class RecipeComponent implements Serializable {
 	private String unit;
 	
 	@NonNull
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "recipeId",
 			updatable = false,
 			nullable = false)

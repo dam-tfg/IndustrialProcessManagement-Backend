@@ -58,7 +58,7 @@ public class Recipe implements Serializable {
 	private String description;
 	
 	@NonNull
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "productId",
 			nullable = false,
 			unique = true)

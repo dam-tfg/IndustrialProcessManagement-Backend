@@ -3,15 +3,18 @@
  */
 package es.damtfg.IndustrialProcessManagement.payload.user;
 
+/**
+ * @author Alberto González
+ *
+ */
+/**
+ * 
+ */
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author Alberto González
- *
- */
 @Getter
 @Setter
 public class LoginRequest {

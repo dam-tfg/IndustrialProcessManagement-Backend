@@ -120,6 +120,8 @@ public class Demo implements CommandLineRunner {
 		apiResponse = recipeComponentService.create(newRecipeComponent);	
 		apiResponse = componentService.create(newComponent);	
 		
+		// Guardamos productos
+		
 		if(apiResponse.getSuccess()) {
 			
 			productService.save(newProduct);

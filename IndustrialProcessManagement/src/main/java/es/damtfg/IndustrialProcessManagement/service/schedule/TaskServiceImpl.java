@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.schedule;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,14 @@ public class TaskServiceImpl implements TaskService {
 		return taskRepository.save(task);
 	}
 
-	
+	@Transactional(readOnly = true)
+	public Optional<Task> findById(Long id) {
+		return taskRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Task> findAll() {
+		return taskRepository.findAll();
+	}
 
 }

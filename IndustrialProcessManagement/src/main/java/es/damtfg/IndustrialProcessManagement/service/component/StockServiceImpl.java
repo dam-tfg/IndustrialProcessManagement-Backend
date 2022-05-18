@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.component;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +35,16 @@ public class StockServiceImpl implements StockService {
 	@Transactional
 	public Stock save(Stock stock) {
 		return stockRepository.save(stock);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Stock> findById(Long id) {
+		return stockRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Stock> findAll() {
+		return stockRepository.findAll();
 	}
 
 }

@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.production;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,16 @@ public class LogServiceImpl implements LogService {
 	@Transactional
 	public Log save(Log log) {
 		return logRepository.save(log);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Log> findById(Long id) {
+		return logRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Log> findAll() {
+		return logRepository.findAll();
 	}
 
 }

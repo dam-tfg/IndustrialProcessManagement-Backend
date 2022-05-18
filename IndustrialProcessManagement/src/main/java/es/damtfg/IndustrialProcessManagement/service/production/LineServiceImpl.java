@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.production;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +43,16 @@ public class LineServiceImpl implements LineService {
 	@Transactional
 	public Line save(Line line) {
 		return lineRepository.save(line);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Line> findById(Long id) {
+		return lineRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Line> findAll() {
+		return lineRepository.findAll();
 	}
 
 }

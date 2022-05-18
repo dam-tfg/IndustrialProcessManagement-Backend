@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.component;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +43,16 @@ public class ComponentServiceImpl implements ComponentService {
 	@Transactional
 	public Component save(Component component) {
 		return componentRepository.save(component);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Component> findById(Long id) {
+		return componentRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Component> findAll() {
+		return componentRepository.findAll();
 	}
 
 }

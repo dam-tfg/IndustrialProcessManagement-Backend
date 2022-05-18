@@ -1,5 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.repository.component;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,12 @@ import es.damtfg.IndustrialProcessManagement.model.component.Stock;
 @Repository
 public interface StockRepository extends JpaRepository <Stock, Long> {
 
-	Stock save(Stock stock);
+	/**
+	 * Búsqueda por ID.
+	 * 
+	 * @param id
+	 * @return Optional
+	 */
+	Optional<Stock> findById(String id);
 
 }

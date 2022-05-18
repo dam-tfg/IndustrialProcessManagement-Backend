@@ -1,5 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.repository.production;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,6 +24,12 @@ public interface SectionRepository extends JpaRepository <Section, Long> {
 	 */
 	Boolean findByName(String name);
 
-	Section save(Section section);
+	/**
+	 * Búsqueda por ID.
+	 * 
+	 * @param id
+	 * @return Optional
+	 */
+	Optional<Section> findById(String id);
 
 }

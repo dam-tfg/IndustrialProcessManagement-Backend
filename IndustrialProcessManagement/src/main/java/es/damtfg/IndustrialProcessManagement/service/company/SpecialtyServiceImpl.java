@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.company;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +43,16 @@ public class SpecialtyServiceImpl implements SpecialtyService {
 	@Transactional
 	public Specialty save(Specialty specialty) {
 		return specialtyRepository.save(specialty);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Specialty> findById(Long id) {
+		return specialtyRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Specialty> findAll() {
+		return specialtyRepository.findAll();
 	}
 
 

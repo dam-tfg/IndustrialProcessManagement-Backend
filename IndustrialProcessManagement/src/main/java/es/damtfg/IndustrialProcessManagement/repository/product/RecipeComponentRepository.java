@@ -1,5 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.repository.product;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +23,13 @@ public interface RecipeComponentRepository extends JpaRepository <RecipeComponen
 	 * @return Optional<recipe>
 	 */
 	Boolean findByUnit(String unit);
+	
+	/**
+	 * Búsqueda por ID.
+	 * 
+	 * @param id
+	 * @return Optional
+	 */
+	Optional<RecipeComponent> findById(String id);
 
 }

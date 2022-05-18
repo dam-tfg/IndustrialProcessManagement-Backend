@@ -1,7 +1,11 @@
 package es.damtfg.IndustrialProcessManagement.service.production;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import es.damtfg.IndustrialProcessManagement.model.production.LogEvent;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
@@ -30,14 +34,22 @@ public class LogEventServiceImpl implements LogEventService {
 
 	@Override
 	public Boolean existsByName(String name) {
-		// TODO Auto-generated method stub
 		return logEventRepository.findByName(name);
 	}
 
 	@Override
 	public LogEvent save(LogEvent logEvent) {
-		// TODO Auto-generated method stub
 		return logEventRepository.save(logEvent);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<LogEvent> findById(Long id) {
+		return logEventRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<LogEvent> findAll() {
+		return logEventRepository.findAll();
 	}
 
 }

@@ -1,5 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.repository.product;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,5 +23,13 @@ public interface ProductRepository extends JpaRepository <Product, Long> {
 	 * @return Optional<producto>
 	 */
 	Boolean findByName(String name);
+	
+	/**
+	 * Búsqueda por ID.
+	 * 
+	 * @param id
+	 * @return Optional
+	 */
+	Optional<Product> findById(String id);
 
 }

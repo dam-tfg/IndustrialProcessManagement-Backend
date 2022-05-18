@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.company;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,14 +26,12 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	@Transactional
 	public Boolean existsByName(String name) {
-		// TODO Auto-generated method stub
 		return companyRepository.findByName(name);
 	}
 
 	@Override
 	@Transactional
 	public Company save(Company company) {
-		// TODO Auto-generated method stub
 		return companyRepository.save(company);
 	}
 
@@ -42,6 +43,14 @@ public class CompanyServiceImpl implements CompanyService {
 		
 	}
 
+	@Transactional(readOnly = true)
+	public Optional<Company> findById(Long id) {
+		return companyRepository.findById(id);
+	}
 
+	@Transactional(readOnly = true)
+	public List<Company> findAll() {
+		return companyRepository.findAll();
+	}
 
 }

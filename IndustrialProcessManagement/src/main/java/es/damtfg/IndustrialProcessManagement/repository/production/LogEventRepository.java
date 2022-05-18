@@ -1,5 +1,7 @@
 package es.damtfg.IndustrialProcessManagement.repository.production;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,8 +23,14 @@ public interface LogEventRepository extends JpaRepository <LogEvent, Long> {
 	 * @return Optional<producto>
 	 */
 	Boolean findByName(String name);
-
-	LogEvent save(LogEvent logEvent);
+	
+	/**
+	 * Búsqueda por ID.
+	 * 
+	 * @param id
+	 * @return Optional
+	 */
+	Optional<LogEvent> findById(String id);
 
 
 }

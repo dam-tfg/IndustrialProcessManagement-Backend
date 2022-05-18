@@ -7,6 +7,11 @@ package es.damtfg.IndustrialProcessManagement.util;
  * @author Alberto González
  *
  */
+/**
+ * 
+ * @author  Carlos Munoz
+ *
+ */
 public abstract class AppMessages {
 
 	public static final String ERROR_USERNAME_EXIST = "Username is already taken";
@@ -29,7 +34,25 @@ public abstract class AppMessages {
 	public static final String LOG_ERROR_JWT_UNSUPPORTED_TOKEN = "Unsupported JWT token";
 	public static final String LOG_ERROR_JWT_CLAIMS_EMPTY = "JWT claims string is empty";
 	
-	public static final String SUCCESS_PRODUCT_CREATION = "prueba";
-	public static final String SUCCESS_ORDER_CREATION = "prueba";
+	public static final String SUCCESS_COMPANY_CREATION = "Order registered successfully";
+	public static final String SUCCESS_SPECIALTY_CREATION = "Order registered successfully";
+	
+	public static final String SUCCESS_COMPONENT_CREATION = "Component registered successfully";
+	public static final String SUCCESS_STOCK_CREATION = "Stock registered successfully";
+	
+	public static final String SUCCESS_PRODUCT_CREATION = "Product registered successfully";
+	public static final String SUCCESS_ORDER_CREATION = "Order registered successfully";
+	public static final String SUCCESS_ORDERDETAILS_CREATION = "OrderDetails registered successfully";
+	public static final String SUCCESS_RECIPE_CREATION = "Recipe registered successfully";
+	public static final String SUCCESS_RECIPECOMPONENT_CREATION = "RecipeComponent registered successfully";
+	
+	public static final String SUCCESS_LINE_CREATION = "Line registered successfully";
+	public static final String SUCCESS_LOG_CREATION = "Log registered successfully";
+	public static final String SUCCESS_LOGEVENT_CREATION = "LogEvent registered successfully";
+	public static final String SUCCESS_PROCESS_CREATION = "Process registered successfully";
+	public static final String SUCCESS_SECTION_CREATION = "Section registered successfully";
+	
+	public static final String SUCCESS_TASK_CREATION = "Task registered successfully";
+
 	
 }

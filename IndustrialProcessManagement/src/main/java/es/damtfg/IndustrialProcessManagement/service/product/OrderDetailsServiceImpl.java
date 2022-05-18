@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.product;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +37,15 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
 	public OrderDetails save(OrderDetails orderDetails) {
 		return orderDetailsRepository.save(orderDetails);
 	}
-	
-	
+
+	@Transactional
+	public Optional<OrderDetails> findById(Long id) {
+		return orderDetailsRepository.findById(id);
+	}
+
+	@Transactional
+	public List<OrderDetails> findAll() {
+		return orderDetailsRepository.findAll();
+	}
 
 }

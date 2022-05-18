@@ -2,6 +2,7 @@ package es.damtfg.IndustrialProcessManagement.service.product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,17 @@ public class RecipeComponentServiceImpl implements RecipeComponentService {
 		}
 				
 		return recipeComponentRepository.saveAll(recipeComponent);
+	}
+
+
+	@Transactional(readOnly = true)
+	public Optional<RecipeComponent> findById(Long id) {
+		return recipeComponentRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<RecipeComponent> findAll() {
+		return recipeComponentRepository.findAll();
 	}
 
 }

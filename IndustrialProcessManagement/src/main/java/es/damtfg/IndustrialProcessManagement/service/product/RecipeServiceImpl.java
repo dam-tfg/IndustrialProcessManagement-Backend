@@ -1,5 +1,8 @@
 package es.damtfg.IndustrialProcessManagement.service.product;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +49,16 @@ public class RecipeServiceImpl implements RecipeService {
 	@Transactional
 	public Recipe save(Recipe recipe) {
 		return recipeRepository.save(recipe);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Recipe> findById(Long id) {
+		return recipeRepository.findById(id);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Recipe> findAll() {
+		return recipeRepository.findAll();
 	}
 
 

@@ -33,6 +33,11 @@ import es.damtfg.IndustrialProcessManagement.util.AppMessages;
  * @author Alberto González
  *
  */
+/**
+ * 
+ * @author  Carlos Munoz
+ *
+ */
 public class Demo implements CommandLineRunner {
 	
 	@Autowired
@@ -102,6 +107,9 @@ public class Demo implements CommandLineRunner {
 			userService.save(newUser);
 		}
 		
+		/**
+		 * Nuevo producto
+		 */
 		newProduct = new Product("Arcilla");
 		newRecipe = new Recipe("Receta de Arcilla", newProduct);
 		newComponent = new Component("Agua y barro");

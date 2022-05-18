@@ -40,6 +40,7 @@ public class Initial implements ApplicationRunner {
 		role.add(new Role("ROLE_ADMIN", "Administrador"));
 		role.add(new Role("ROLE_USER", "Usuario de app"));
 		role.add(new Role("ROLE_CLIENT", "Client genérico"));
+		role.add(new Role("ROLE_COMPANY", "Empresa externa"));
 		role.add(new Role("ROLE_EMPLOYEE", "Trabajador de la empresa"));
 		role.add(new Role("ROLE_TESTER", "Testeador de la app"));
 				

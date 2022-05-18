@@ -36,7 +36,7 @@ public class SpecialtyController {
 
 	@Autowired
 	private SpecialtyServiceImpl specialtyService;
-	
+
 	/**
 	 * 
 	 * @param specialtyRequest

@@ -12,7 +12,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RecipeComponentRequest {
+public class RecipeComponentRequest extends RecipeRequest {
 	
 	private String unit;
 

@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
+import es.damtfg.IndustrialProcessManagement.model.product.Product;
 import es.damtfg.IndustrialProcessManagement.model.product.Recipe;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.products.RecipeRequest;
+import es.damtfg.IndustrialProcessManagement.service.product.ProductServiceImpl;
 import es.damtfg.IndustrialProcessManagement.service.product.RecipeServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -38,6 +40,9 @@ public class RecipeController {
 	@Autowired
 	private RecipeServiceImpl recipeService;
 	
+	@Autowired
+	private ProductServiceImpl productService;
+	
 	/**
 	 * Crea receta
 	 * 
@@ -48,14 +53,22 @@ public class RecipeController {
 	
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody RecipeRequest recipeRequest) {
+		
+		Product newProduct = new Product(recipeRequest.getName());
+		
+		ApiResponse apiResponse = productService.create(newProduct);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 				
 		Recipe newRecipe = new Recipe(recipeRequest.getName(), recipeRequest.getProduct());
 		
-		ApiResponse apiResponse = recipeService.create(newRecipe);
+		newProduct.setRecipe(newRecipe);
+		
+		apiResponse = recipeService.create(newRecipe);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Recipe result = recipeService.save(newRecipe);
+		Product result = productService.save(newProduct);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		

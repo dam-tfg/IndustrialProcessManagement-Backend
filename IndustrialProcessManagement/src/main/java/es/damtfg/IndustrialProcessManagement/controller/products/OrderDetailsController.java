@@ -2,6 +2,7 @@ package es.damtfg.IndustrialProcessManagement.controller.products;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,9 +21,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
 import es.damtfg.IndustrialProcessManagement.model.product.OrderDetails;
+import es.damtfg.IndustrialProcessManagement.model.product.Product;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.products.OrderDetailsRequest;
 import es.damtfg.IndustrialProcessManagement.service.product.OrderDetailsServiceImpl;
+import es.damtfg.IndustrialProcessManagement.service.product.ProductServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
 
@@ -38,6 +41,9 @@ public class OrderDetailsController {
 	@Autowired
 	private OrderDetailsServiceImpl orderDetailsService;
 	
+	@Autowired
+	private ProductServiceImpl productService;
+	
 	/**
 	 * Crea detalles de la orden
 	 * 
@@ -46,18 +52,27 @@ public class OrderDetailsController {
 	 * @return ResponseEntity (HTTP Status created + Location)
 	 */
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody OrderDetailsRequest orderDetailsRequest) {
+		
+		Product newProduct = new Product(orderDetailsRequest.getName());
+		
+		ApiResponse apiResponse = productService.create(newProduct);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 				
 		OrderDetails newOrderDetails = new OrderDetails(orderDetailsRequest.getUnit(), orderDetailsRequest.getProduct());
 		
-		ApiResponse apiResponse = orderDetailsService.create(newOrderDetails);
+		newProduct.setOrderDetails((Set<OrderDetails>) newOrderDetails);
+		
+		apiResponse = orderDetailsService.create(newOrderDetails);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		OrderDetails result = orderDetailsService.save(newOrderDetails);
+		Product result = productService.save(newProduct);
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUnit()).toUri();	
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		
 		return ResponseEntity.created(location).body(new ApiResponse(true, AppMessages.SUCCESS_ORDERDETAILS_CREATION));	
 	}

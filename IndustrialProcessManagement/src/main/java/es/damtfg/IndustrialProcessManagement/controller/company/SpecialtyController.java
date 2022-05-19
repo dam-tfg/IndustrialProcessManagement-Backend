@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
 import es.damtfg.IndustrialProcessManagement.model.company.Specialty;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.company.SpecialtyRequest;
 import es.damtfg.IndustrialProcessManagement.service.company.SpecialtyServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -41,9 +42,9 @@ public class SpecialtyController {
 	 * 
 	 * @param specialtyRequest
 	 * @return
-	 */
+	 */	
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody Specialty specialtyRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody SpecialtyRequest specialtyRequest) {
 		
 		Specialty newSpecialty = new Specialty(specialtyRequest.getName(), specialtyRequest.getDescription());
 		

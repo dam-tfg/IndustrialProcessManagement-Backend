@@ -21,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
 import es.damtfg.IndustrialProcessManagement.model.component.Component;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
+import es.damtfg.IndustrialProcessManagement.payload.component.ComponentRequest;
 import es.damtfg.IndustrialProcessManagement.service.component.ComponentServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -36,14 +37,14 @@ public class ComponentController {
 	
 	@Autowired
 	private ComponentServiceImpl componentService;
-	
+
 	/**
 	 * 
 	 * @param componentRequest
 	 * @return
 	 */
 	@PostMapping("new")
-	public ResponseEntity<ApiResponse> create(@Valid @RequestBody Component componentRequest) {
+	public ResponseEntity<ApiResponse> create(@Valid @RequestBody ComponentRequest componentRequest) {
 		
 		Component newComponent = new Component(componentRequest.getName());
 		
@@ -56,7 +57,7 @@ public class ComponentController {
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		
 		return ResponseEntity.created(location).body(new ApiResponse(true, AppMessages.SUCCESS_COMPONENT_CREATION));	
-	}
+	}	
 	
 	/**
 	 * Devuelve un componentes por ID

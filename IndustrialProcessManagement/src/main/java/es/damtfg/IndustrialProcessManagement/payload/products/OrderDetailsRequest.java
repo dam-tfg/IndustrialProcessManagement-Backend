@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class OrderDetailsRequest{
+public class OrderDetailsRequest extends ProductRequest{
 
 	private String unit;
 	

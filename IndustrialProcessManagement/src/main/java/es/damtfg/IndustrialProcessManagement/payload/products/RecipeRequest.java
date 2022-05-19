@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class RecipeRequest {
+public class RecipeRequest extends ProductRequest {
 	
 	private String name;
 	

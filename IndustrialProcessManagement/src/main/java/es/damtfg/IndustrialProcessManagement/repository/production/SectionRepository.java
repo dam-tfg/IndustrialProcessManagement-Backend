@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.damtfg.IndustrialProcessManagement.model.production.Line;
 import es.damtfg.IndustrialProcessManagement.model.production.Section;
 
 /**
@@ -31,5 +32,7 @@ public interface SectionRepository extends JpaRepository <Section, Long> {
 	 * @return Optional
 	 */
 	Optional<Section> findById(String id);
+
+	Line save(Line line);
 
 }

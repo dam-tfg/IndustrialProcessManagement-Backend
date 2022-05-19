@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.damtfg.IndustrialProcessManagement.model.production.Line;
 import es.damtfg.IndustrialProcessManagement.model.production.Section;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.repository.production.SectionRepository;
@@ -18,7 +19,7 @@ import es.damtfg.IndustrialProcessManagement.util.AppMessages;
  *
  */
 @Service
-public class SectionServiceImpl implements SectionService{
+public class SectionServiceImpl implements SectionService {
 	
 	@Autowired
 	private SectionRepository sectionRepository;
@@ -53,6 +54,11 @@ public class SectionServiceImpl implements SectionService{
 	@Transactional(readOnly = true)
 	public List<Section> findAll() {
 		return sectionRepository.findAll();
+	}
+
+	@Transactional
+	public Line saveline(Line line) {
+		return sectionRepository.save(line);
 	}
 
 }

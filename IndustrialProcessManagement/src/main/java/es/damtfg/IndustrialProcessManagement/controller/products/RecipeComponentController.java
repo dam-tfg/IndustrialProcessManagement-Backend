@@ -19,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
+import es.damtfg.IndustrialProcessManagement.model.component.Component;
+import es.damtfg.IndustrialProcessManagement.model.product.Recipe;
 import es.damtfg.IndustrialProcessManagement.model.product.RecipeComponent;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.products.RecipeComponentRequest;
+import es.damtfg.IndustrialProcessManagement.service.component.ComponentServiceImpl;
 import es.damtfg.IndustrialProcessManagement.service.product.RecipeComponentServiceImpl;
+import es.damtfg.IndustrialProcessManagement.service.product.RecipeServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
 
@@ -38,6 +42,12 @@ public class RecipeComponentController {
 	@Autowired
 	private RecipeComponentServiceImpl recipeComponentService;
 	
+	@Autowired
+	private RecipeServiceImpl recipeService;
+	
+	@Autowired
+	private ComponentServiceImpl componentService;
+	
 	/**
 	 * Crea componente de receta.
 	 * 
@@ -48,16 +58,26 @@ public class RecipeComponentController {
 	
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody RecipeComponentRequest recipeComponentRequest) {
-				
-		RecipeComponent newRecipeComponent = new RecipeComponent(recipeComponentRequest.getUnit(), recipeComponentRequest.getRecipe(), recipeComponentRequest.getComponent());
 		
-		ApiResponse apiResponse = recipeComponentService.create(newRecipeComponent);
+		Recipe newRecipe = new Recipe(recipeComponentRequest.getName(), recipeComponentRequest.getProduct());
+		
+		ApiResponse apiResponse = recipeService.create(newRecipe);
+		
+		Component newComponent = new Component(recipeComponentRequest.getName());
+		
+		apiResponse = componentService.create(newComponent);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+				
+		RecipeComponent newRecipeComponent = new RecipeComponent(recipeComponentRequest.getUnit(), newRecipe, newComponent);
+		
+		apiResponse = recipeComponentService.create(newRecipeComponent);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		RecipeComponent result = recipeComponentService.save(newRecipeComponent);
+		Recipe result = recipeService.save(newRecipe);
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUnit()).toUri();	
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		
 		return ResponseEntity.created(location).body(new ApiResponse(true, AppMessages.SUCCESS_RECIPECOMPONENT_CREATION));	
 	}

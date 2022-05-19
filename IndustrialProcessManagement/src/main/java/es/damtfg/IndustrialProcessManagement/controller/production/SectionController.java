@@ -2,6 +2,7 @@ package es.damtfg.IndustrialProcessManagement.controller.production;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -19,9 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
+import es.damtfg.IndustrialProcessManagement.model.production.Line;
 import es.damtfg.IndustrialProcessManagement.model.production.Section;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.production.SectionRequest;
+import es.damtfg.IndustrialProcessManagement.service.production.LineServiceImpl;
 import es.damtfg.IndustrialProcessManagement.service.production.SectionServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -38,12 +41,24 @@ public class SectionController {
 	@Autowired
 	private SectionServiceImpl sectionService;
 	
+	@Autowired
+	private LineServiceImpl lineService;
+	
+	@SuppressWarnings("unchecked")
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody SectionRequest sectionRequest) {
 		
-		Section newSection = new Section(sectionRequest.getName(), sectionRequest.getLine());
+		Line newLine = new Line(sectionRequest.getName());
 		
-		ApiResponse apiResponse = sectionService.create(newSection);
+		ApiResponse apiResponse = lineService.create(newLine);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+		
+		Section newSection = new Section(sectionRequest.getName(), newLine);
+		
+		newLine.setSection((Set<Section>) newSection);
+		
+		apiResponse = sectionService.create(newSection);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		

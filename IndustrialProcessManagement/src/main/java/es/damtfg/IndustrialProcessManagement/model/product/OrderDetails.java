@@ -72,5 +72,4 @@ public class OrderDetails implements Serializable {
 			mappedBy = "orderDetails")
 	@JsonManagedReference
 	private Task task;
-	
 }

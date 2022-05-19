@@ -75,9 +75,7 @@ public class CompanyController {
 		
 		User result = userService.save(newUser);
 		
-		URI location = ServletUriComponentsBuilder
-				.fromCurrentContextPath()
-				.buildAndExpand(result.getUsername()).toUri();	
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUsername()).toUri();	
 		
 		return ResponseEntity.created(location).body(new ApiResponse(true, AppMessages.SUCCESS_COMPANY_CREATION));	
 	}
@@ -111,6 +109,25 @@ public class CompanyController {
 				.collect(Collectors.toList());
 		
 		return company;
+	}
+	
+	/**
+	 * Devuelve una company por nombre de usuario
+	 * 
+	 * @param username
+	 * 
+	 * @return ResponseEntity (OK + Company)
+	 */
+	@GetMapping("{username}")
+	public ResponseEntity<?> read(@PathVariable String username) {
+		
+		User user = userService.findByUsername(username)
+				.orElseThrow(() -> new ResourceNotFoundException("User", "username", username));
+		
+		Company company = companyService.findById(user.getId())
+				.orElseThrow(() -> new ResourceNotFoundException("Company", "username", username));
+		
+		return ResponseEntity.ok(company);
 	}
 
 }

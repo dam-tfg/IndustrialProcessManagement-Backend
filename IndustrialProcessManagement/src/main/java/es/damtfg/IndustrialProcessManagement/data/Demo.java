@@ -62,15 +62,18 @@ public class Demo implements CommandLineRunner {
 	@Transactional
 	public void run(String... args) throws Exception {
 			
+		addUsers();
+		
+		addProducts();
+	}
+	
+	private void addUsers() {
+		
 		User newUser;
 		Person newPerson;
 		ApiResponse apiResponse;
-		Product newProduct;
-		Recipe newRecipe;
-		RecipeComponent newRecipeComponent;
-		Component newComponent;
 		
-		Role userRole = roleService.findByName("ROLE_ADMIN")
+		Role userRole = roleService.findByName("ROLE_USER")
 				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
 		
 		/**
@@ -108,7 +111,85 @@ public class Demo implements CommandLineRunner {
 		}
 		
 		/**
-		 * Nuevo producto
+		 * Usuario -> Cliente
+		 */
+		newUser = new User("client", "client@localhost.es", "client-demo", new Date());
+		newPerson = new Person("Cliente", "De Aplicación", newUser);
+		
+		apiResponse = userService.create(newUser);
+		
+		if(apiResponse.getSuccess()) {
+			
+			newUser.setPerson(newPerson);
+			
+			newUser.setRoles(Collections.singleton(userRole));
+			
+			userService.save(newUser);
+		}
+		
+		/**
+		 * Usuario -> Company
+		 */
+		newUser = new User("company", "company@localhost.es", "company-demo", new Date());
+		newPerson = new Person("Company", "De Aplicación", newUser);
+		
+		apiResponse = userService.create(newUser);
+		
+		if(apiResponse.getSuccess()) {
+			
+			newUser.setPerson(newPerson);
+			
+			newUser.setRoles(Collections.singleton(userRole));
+			
+			userService.save(newUser);
+		}
+		
+		/**
+		 * Usuario -> Empleado
+		 */
+		newUser = new User("empleado", "empleado@localhost.es", "empleado-demo", new Date());
+		newPerson = new Person("Empleado", "De Aplicación", newUser);
+		
+		apiResponse = userService.create(newUser);
+		
+		if(apiResponse.getSuccess()) {
+			
+			newUser.setPerson(newPerson);
+			
+			newUser.setRoles(Collections.singleton(userRole));
+			
+			userService.save(newUser);
+		}
+		
+		/**
+		 * Usuario -> Tester
+		 */
+		newUser = new User("tester", "tester@localhost.es", "tester-demo", new Date());
+		newPerson = new Person("Tester", "De Aplicación", newUser);
+		
+		apiResponse = userService.create(newUser);
+		
+		if(apiResponse.getSuccess()) {
+			
+			newUser.setPerson(newPerson);
+			
+			newUser.setRoles(Collections.singleton(userRole));
+			
+			userService.save(newUser);
+		}
+		
+	}
+	
+	private void addProducts() {
+		
+		ApiResponse apiResponse;
+		Product newProduct;
+		Recipe newRecipe;
+		RecipeComponent newRecipeComponent;
+		Component newComponent;
+		
+		/**
+		 * Nuevo producto - Arcilla
 		 */
 		newProduct = new Product("Arcilla");
 		newRecipe = new Recipe("Receta de Arcilla", newProduct);
@@ -120,7 +201,9 @@ public class Demo implements CommandLineRunner {
 		apiResponse = recipeComponentService.create(newRecipeComponent);	
 		apiResponse = componentService.create(newComponent);	
 		
-		// Guardamos productos
+		/**
+		 * Guardamos los productos
+		 */
 		
 		if(apiResponse.getSuccess()) {
 			
@@ -129,6 +212,132 @@ public class Demo implements CommandLineRunner {
 			recipeComponentService.save(newRecipeComponent);
 			componentService.save(newComponent);
 		}
+		
+		/**
+		 * Nuevo producto - Acero
+		 */
+		newProduct = new Product("Acero");
+		newRecipe = new Recipe("Receta de Acero", newProduct);
+		newComponent = new Component("Mineral de hierro");
+		newRecipeComponent = new RecipeComponent("5kg de mineral de hierro", newRecipe, newComponent);
+		
+		apiResponse = productService.create(newProduct);
+		apiResponse = recipeService.create(newRecipe);	
+		apiResponse = recipeComponentService.create(newRecipeComponent);	
+		apiResponse = componentService.create(newComponent);	
+		
+		/**
+		 * Guardamos los productos
+		 */
+		
+		if(apiResponse.getSuccess()) {
+			
+			productService.save(newProduct);
+			recipeService.save(newRecipe);
+			recipeComponentService.save(newRecipeComponent);
+			componentService.save(newComponent);
+		}
+		
+		/**
+		 * Nuevo producto - Yeso
+		 */
+		newProduct = new Product("Yeso");
+		newRecipe = new Recipe("Receta de Yeso", newProduct);
+		newComponent = new Component("Yeso, Silicio, Agua");
+		newRecipeComponent = new RecipeComponent("1kg de yeso, 1kg de silicio en polvo, 1L de agua", newRecipe, newComponent);
+		
+		apiResponse = productService.create(newProduct);
+		apiResponse = recipeService.create(newRecipe);	
+		apiResponse = recipeComponentService.create(newRecipeComponent);	
+		apiResponse = componentService.create(newComponent);	
+		
+		/**
+		 * Guardamos los productos
+		 */
+		
+		if(apiResponse.getSuccess()) {
+			
+			productService.save(newProduct);
+			recipeService.save(newRecipe);
+			recipeComponentService.save(newRecipeComponent);
+			componentService.save(newComponent);
+		}
+		
+		/**
+		 * Nuevo producto - Ladrillo
+		 */
+		newProduct = new Product("Ladrillo");
+		newRecipe = new Recipe("Receta de Ladrillo", newProduct);
+		newComponent = new Component("tierra, agua y arena");
+		newRecipeComponent = new RecipeComponent("1kg de tierra, 1kg arena, 1L de agua", newRecipe, newComponent);
+		
+		apiResponse = productService.create(newProduct);
+		apiResponse = recipeService.create(newRecipe);	
+		apiResponse = recipeComponentService.create(newRecipeComponent);	
+		apiResponse = componentService.create(newComponent);	
+		
+		/**
+		 * Guardamos los productos
+		 */
+		
+		if(apiResponse.getSuccess()) {
+			
+			productService.save(newProduct);
+			recipeService.save(newRecipe);
+			recipeComponentService.save(newRecipeComponent);
+			componentService.save(newComponent);
+		}
+		
+		/**
+		 * Nuevo producto - Tubos de polietileno
+		 */
+		newProduct = new Product("Tubos de polietileno");
+		newRecipe = new Recipe("Receta de Tubos de polietileno", newProduct);
+		newComponent = new Component("polietileno");
+		newRecipeComponent = new RecipeComponent("1kg de polietileno", newRecipe, newComponent);
+		
+		apiResponse = productService.create(newProduct);
+		apiResponse = recipeService.create(newRecipe);	
+		apiResponse = recipeComponentService.create(newRecipeComponent);	
+		apiResponse = componentService.create(newComponent);	
+		
+		/**
+		 * Guardamos los productos
+		 */
+		
+		if(apiResponse.getSuccess()) {
+			
+			productService.save(newProduct);
+			recipeService.save(newRecipe);
+			recipeComponentService.save(newRecipeComponent);
+			componentService.save(newComponent);
+		}
+		
+		/**
+		 * Nuevo producto - Tablero de madera
+		 */
+		newProduct = new Product("Tablero de madera");
+		newRecipe = new Recipe("Receta de Tablero de madera 122x250", newProduct);
+		newComponent = new Component("Compuesto de ocume y pino");
+		newRecipeComponent = new RecipeComponent("0.5kg de ocume y 0.5kg pino", newRecipe, newComponent);
+		
+		apiResponse = productService.create(newProduct);
+		apiResponse = recipeService.create(newRecipe);	
+		apiResponse = recipeComponentService.create(newRecipeComponent);	
+		apiResponse = componentService.create(newComponent);	
+		
+		/**
+		 * Guardamos los productos
+		 */
+		
+		if(apiResponse.getSuccess()) {
+			
+			productService.save(newProduct);
+			recipeService.save(newRecipe);
+			recipeComponentService.save(newRecipeComponent);
+			componentService.save(newComponent);
+		}
+		
 	}
 	
 }

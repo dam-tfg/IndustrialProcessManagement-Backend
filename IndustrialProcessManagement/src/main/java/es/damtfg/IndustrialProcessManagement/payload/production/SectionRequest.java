@@ -11,7 +11,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class SectionRequest {
+public class SectionRequest extends LineRequest {
 	
 	private String name;
 

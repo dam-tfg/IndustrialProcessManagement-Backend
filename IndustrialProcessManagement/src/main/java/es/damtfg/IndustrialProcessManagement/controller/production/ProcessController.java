@@ -2,6 +2,7 @@ package es.damtfg.IndustrialProcessManagement.controller.production;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,9 +21,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
 import es.damtfg.IndustrialProcessManagement.model.production.Process;
+import es.damtfg.IndustrialProcessManagement.model.production.Section;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.production.ProcessRequest;
 import es.damtfg.IndustrialProcessManagement.service.production.ProcessServiceImpl;
+import es.damtfg.IndustrialProcessManagement.service.production.SectionServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
 
@@ -38,21 +41,34 @@ public class ProcessController {
 	@Autowired
 	private ProcessServiceImpl processService;
 	
+	@Autowired
+	private SectionServiceImpl sectionService;
+	
 	/**
 	 * 
 	 * @param processRequest
+	 * @param id 
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody ProcessRequest processRequest) {
 		
-		Process newProcess = new Process(processRequest.getName(), processRequest.getSection());
+		Section newSection = new Section(processRequest.getName(), processRequest.getLine());
 		
-		ApiResponse apiResponse = processService.create(newProcess);
+		ApiResponse apiResponse = sectionService.create(newSection);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Process result = processService.save(newProcess);
+		Process newProcess = new Process(processRequest.getName(), newSection);
+		
+		newSection.setProcess((Set<Process>) newProcess);
+		
+		apiResponse = processService.create(newProcess);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+		
+		Section result = sectionService.save(newSection);
 		
 		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getName()).toUri();	
 		

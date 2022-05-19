@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import es.damtfg.IndustrialProcessManagement.exception.ResourceNotFoundException;
+import es.damtfg.IndustrialProcessManagement.model.product.OrderDetails;
 import es.damtfg.IndustrialProcessManagement.model.schedule.Task;
 import es.damtfg.IndustrialProcessManagement.payload.ApiResponse;
 import es.damtfg.IndustrialProcessManagement.payload.schedule.TaskRequest;
+import es.damtfg.IndustrialProcessManagement.service.product.OrderDetailsServiceImpl;
 import es.damtfg.IndustrialProcessManagement.service.schedule.TaskServiceImpl;
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 import es.damtfg.IndustrialProcessManagement.util.constants.ApiPath;
@@ -38,18 +40,34 @@ public class TaskController {
 	@Autowired
 	private TaskServiceImpl taskService;
 	
+	@Autowired
+	private OrderDetailsServiceImpl orderDetailsService;
+	
+	/**
+	 * 
+	 * @param taskRequest
+	 * @return
+	 */
 	@PostMapping("new")
 	public ResponseEntity<ApiResponse> create(@Valid @RequestBody TaskRequest taskRequest) {
-				
-		Task newTask = new Task(taskRequest.getDate(), taskRequest.getOrderDetails());
 		
-		ApiResponse apiResponse = taskService.create(newTask);
+		OrderDetails newOrderDetails = new OrderDetails(taskRequest.getUnit(), taskRequest.getProduct());
+		
+		ApiResponse apiResponse = orderDetailsService.create(newOrderDetails);
+		
+		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+				
+		Task newTask = new Task(taskRequest.getDate(), newOrderDetails);
+		
+		newOrderDetails.setTask(newTask);
+		
+		apiResponse = taskService.create(newTask);
 		
 		if(!apiResponse.getSuccess()) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
 		
-		Task result = taskService.save(newTask);
+		OrderDetails result = orderDetailsService.save(newOrderDetails);
 		
-		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getDate()).toUri();	
+		URI location = ServletUriComponentsBuilder.fromCurrentContextPath().buildAndExpand(result.getUnit()).toUri();	
 		
 		return ResponseEntity.created(location).body(new ApiResponse(true, AppMessages.SUCCESS_TASK_CREATION));	
 	}

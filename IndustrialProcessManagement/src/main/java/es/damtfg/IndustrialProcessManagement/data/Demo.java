@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 
 import es.damtfg.IndustrialProcessManagement.exception.AppException;
+import es.damtfg.IndustrialProcessManagement.model.company.Company;
 import es.damtfg.IndustrialProcessManagement.model.component.Component;
 import es.damtfg.IndustrialProcessManagement.model.product.Product;
 import es.damtfg.IndustrialProcessManagement.model.product.Recipe;
@@ -31,11 +32,7 @@ import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 
 /**
  * @author Alberto González
- *
- */
-/**
- * 
- * @author  Carlos Munoz
+ * @author Carlos Munoz
  *
  */
 public class Demo implements CommandLineRunner {
@@ -63,7 +60,7 @@ public class Demo implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 			
 		addUsers();
-		
+		addCompanies();
 		addProducts();
 	}
 	
@@ -72,10 +69,7 @@ public class Demo implements CommandLineRunner {
 		User newUser;
 		Person newPerson;
 		ApiResponse apiResponse;
-		
-		Role userRole = roleService.findByName("ROLE_USER")
-				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
-		
+				
 		/**
 		 * Usuario -> Administrador
 		 */
@@ -94,21 +88,28 @@ public class Demo implements CommandLineRunner {
 		}
 		
 		/**
-		 * Usuario -> Usuario
+		 * Usuarios -> Usuario
 		 */
-		newUser = new User("user", "user@localhost.es", "user-demo", new Date());
-		newPerson = new Person("Usuario", "De Aplicación", newUser);
+		Role userRole = roleService.findByName("ROLE_USER")
+				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
 		
-		apiResponse = userService.create(newUser);
+		for(int index = 1; index <= 40; index++) {
 		
-		if(apiResponse.getSuccess()) {
+			newUser = new User("user" + index, "user" + index + "@localhost.es", "user-demo", new Date());
+			newPerson = new Person("Usuario " + index, "Aplicación", newUser);
 			
-			newUser.setPerson(newPerson);
+			apiResponse = userService.create(newUser);
 			
-			newUser.setRoles(Collections.singleton(userRole));
-			
-			userService.save(newUser);
+			if(apiResponse.getSuccess()) {
+				
+				newUser.setPerson(newPerson);
+				
+				newUser.setRoles(Collections.singleton(userRole));
+				
+				userService.save(newUser);
+			}
 		}
+		
 		
 		/**
 		 * Usuario -> Cliente
@@ -118,28 +119,14 @@ public class Demo implements CommandLineRunner {
 		
 		apiResponse = userService.create(newUser);
 		
-		if(apiResponse.getSuccess()) {
-			
-			newUser.setPerson(newPerson);
-			
-			newUser.setRoles(Collections.singleton(userRole));
-			
-			userService.save(newUser);
-		}
-		
-		/**
-		 * Usuario -> Company
-		 */
-		newUser = new User("company", "company@localhost.es", "company-demo", new Date());
-		newPerson = new Person("Company", "De Aplicación", newUser);
-		
-		apiResponse = userService.create(newUser);
+		Role clientRole = roleService.findByName("ROLE_CLIENT")
+				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
 		
 		if(apiResponse.getSuccess()) {
 			
 			newUser.setPerson(newPerson);
 			
-			newUser.setRoles(Collections.singleton(userRole));
+			newUser.setRoles(Collections.singleton(clientRole));
 			
 			userService.save(newUser);
 		}
@@ -152,11 +139,14 @@ public class Demo implements CommandLineRunner {
 		
 		apiResponse = userService.create(newUser);
 		
+		Role employeeRole = roleService.findByName("ROLE_EMPLOYEE")
+				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
+		
 		if(apiResponse.getSuccess()) {
 			
 			newUser.setPerson(newPerson);
 			
-			newUser.setRoles(Collections.singleton(userRole));
+			newUser.setRoles(Collections.singleton(employeeRole));
 			
 			userService.save(newUser);
 		}
@@ -169,13 +159,47 @@ public class Demo implements CommandLineRunner {
 		
 		apiResponse = userService.create(newUser);
 		
+		Role testerRole = roleService.findByName("ROLE_TESTER")
+				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
+		
 		if(apiResponse.getSuccess()) {
 			
 			newUser.setPerson(newPerson);
 			
-			newUser.setRoles(Collections.singleton(userRole));
+			newUser.setRoles(Collections.singleton(testerRole));
 			
 			userService.save(newUser);
+		}
+		
+	}
+	
+	private void addCompanies() {
+		
+		User newUser;
+		Company newCompany;
+		ApiResponse apiResponse;
+		
+		Role companyRole = roleService.findByName("ROLE_COMPANY")
+				.orElseThrow(() -> new AppException(AppMessages.EXCEPTION_USER_ROLE_NOT_SET));
+		
+		/**
+		 * Usuarios -> Company
+		 */
+		for(int index = 1; index <= 20; index++) {
+		
+			newUser = new User("company" + index, "company" + index + "@localhost.es", "company-demo", new Date());
+			newCompany = new Company("Empresa " + index, newUser);
+			
+			apiResponse = userService.create(newUser);
+			
+			if(apiResponse.getSuccess()) {
+				
+				newUser.setCompany(newCompany);
+				
+				newUser.setRoles(Collections.singleton(companyRole));
+				
+				userService.save(newUser);
+			}
 		}
 		
 	}

@@ -22,6 +22,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import es.damtfg.IndustrialProcessManagement.model.product.Order;
 import es.damtfg.IndustrialProcessManagement.model.user.Person;
@@ -67,12 +68,12 @@ public class Company implements Serializable {
 	private String name;
 	
 	@NonNull
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userId",
 			updatable = false,
 			nullable = false,
 			unique = true)
-	@JsonBackReference
+	@JsonManagedReference
 	private User user;
 
 	@OneToOne(fetch = FetchType.LAZY)
@@ -85,6 +86,7 @@ public class Company implements Serializable {
 			cascade = CascadeType.ALL,
 			orphanRemoval = false)
 	@JoinColumn(name = "companyId")
+	@JsonBackReference
 	private Set<Order> order;
 
 }

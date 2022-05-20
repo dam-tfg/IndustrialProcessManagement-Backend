@@ -33,8 +33,6 @@ public class UserPrincipal implements UserDetails {
 	private static final long serialVersionUID = 2605409388446254622L;
 	
 	private Long id;
-	private String name;
-	private String surnames;
 	private String username;
 	private String email;
 	
@@ -57,8 +55,6 @@ public class UserPrincipal implements UserDetails {
         
         return new UserPrincipal(
                 user.getId(),
-                user.getPerson().getName(),
-                user.getPerson().getSurname(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),

@@ -134,7 +134,7 @@ public class Demo implements CommandLineRunner {
 		/**
 		 * Usuario -> Empleado
 		 */
-		newUser = new User("empleado", "empleado@localhost.es", "empleado-demo", new Date());
+		newUser = new User("employee", "employee@localhost.es", "employee-demo", new Date());
 		newPerson = new Person("Empleado", "De Aplicación", newUser);
 		
 		apiResponse = userService.create(newUser);

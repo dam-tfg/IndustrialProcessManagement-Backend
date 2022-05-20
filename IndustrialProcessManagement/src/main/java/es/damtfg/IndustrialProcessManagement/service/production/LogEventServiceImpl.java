@@ -1,5 +1,6 @@
 package es.damtfg.IndustrialProcessManagement.service.production;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ import es.damtfg.IndustrialProcessManagement.repository.production.LogEventRepos
 import es.damtfg.IndustrialProcessManagement.util.AppMessages;
 
 /**
- * 
+ * @author Alberto González
  * @author Carlos Munoz
  *
  */
@@ -33,10 +34,15 @@ public class LogEventServiceImpl implements LogEventService {
 	}
 
 	@Override
-	public Boolean existsByName(String name) {
+	public Optional<LogEvent> findByName(String name) {
 		return logEventRepository.findByName(name);
 	}
 
+	@Override
+	public Boolean existsByName(String name) {
+		return logEventRepository.existsByName(name);
+	}
+	
 	@Override
 	public LogEvent save(LogEvent logEvent) {
 		return logEventRepository.save(logEvent);
@@ -50,6 +56,27 @@ public class LogEventServiceImpl implements LogEventService {
 	@Transactional(readOnly = true)
 	public List<LogEvent> findAll() {
 		return logEventRepository.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public List<LogEvent> saveAll(ArrayList<LogEvent> event) {
+				
+		int index = 0;
+		
+		while(index < event.size()) {
+			
+			if(existsByName(event.get(index).getName())) {
+				
+				event.remove(index);
+				
+			} else {
+				
+				index++;
+			}
+		}
+				
+		return logEventRepository.saveAll(event);
 	}
 
 }

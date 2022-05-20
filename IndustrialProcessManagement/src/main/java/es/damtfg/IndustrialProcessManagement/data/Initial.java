@@ -11,6 +11,7 @@ import org.springframework.boot.ApplicationRunner;
 
 import es.damtfg.IndustrialProcessManagement.model.production.LogEvent;
 import es.damtfg.IndustrialProcessManagement.model.user.security.Role;
+import es.damtfg.IndustrialProcessManagement.service.production.LogEventServiceImpl;
 import es.damtfg.IndustrialProcessManagement.service.user.security.RoleServiceImpl;
 
 /**
@@ -21,6 +22,9 @@ public class Initial implements ApplicationRunner {
 
 	@Autowired
 	private RoleServiceImpl roleService;
+	
+	@Autowired
+	private LogEventServiceImpl eventService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
@@ -59,7 +63,6 @@ public class Initial implements ApplicationRunner {
 		event.add(new LogEvent("FORCE_PAUSE", "Parada momentánea forzada de la fabricación"));
 		event.add(new LogEvent("STOP", "Detención de la fabricación"));
 		
-		// TODO Creación del servicio
-		// eventService.saveAll(event);
+		eventService.saveAll(event);
 	}
 }

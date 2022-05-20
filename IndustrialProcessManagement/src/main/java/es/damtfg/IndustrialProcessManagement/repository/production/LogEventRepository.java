@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import es.damtfg.IndustrialProcessManagement.model.production.LogEvent;
 
 /**
- * 
- * @author  Carlos Munoz
+ * @author Alberto González
+ * @author Carlos Munoz
  *
  */
 @Repository
@@ -20,9 +20,18 @@ public interface LogEventRepository extends JpaRepository <LogEvent, Long> {
 	 * 
 	 * @param name
 	 * 
-	 * @return Optional<producto>
+	 * @return Optional<LogEvent>
 	 */
-	Boolean findByName(String name);
+	Optional<LogEvent> findByName(String name);
+	
+	/**
+	 * Comprueba la existencia de un nombre.
+	 * 
+	 * @param name
+	 * 
+	 * @return
+	 */
+	Boolean existsByName(String name);
 	
 	/**
 	 * Búsqueda por ID.
@@ -31,6 +40,5 @@ public interface LogEventRepository extends JpaRepository <LogEvent, Long> {
 	 * @return Optional
 	 */
 	Optional<LogEvent> findById(String id);
-
 
 }
